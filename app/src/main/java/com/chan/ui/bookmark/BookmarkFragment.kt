@@ -17,6 +17,7 @@ import com.chan.ui.bookmark.repository.BookmarkRepository
 import com.chan.ui.bookmark.viewmodel.BookmarkViewModel
 import com.chan.ui.detail.ProductDetailActivityContract
 import com.chan.ui.detail.ProductDetailContractData
+import com.chan.utils.showToast
 import com.orhanobut.logger.Logger
 
 class BookmarkFragment : BaseFragment<FragmentBookmarkBinding>(
@@ -53,8 +54,7 @@ class BookmarkFragment : BaseFragment<FragmentBookmarkBinding>(
         binding.bookmarkViewModel = ViewModelProvider(this, object : ViewModelProvider.Factory {
             override fun <T : ViewModel?> create(modelClass: Class<T>): T {
                 return BookmarkViewModel(
-                    BookmarkRepository(BookmarkDataSource()),
-                    activityResultLauncher
+                    BookmarkRepository(BookmarkDataSource())
                 ) as T
             }
         }).get(BookmarkViewModel::class.java)
@@ -85,7 +85,7 @@ class BookmarkFragment : BaseFragment<FragmentBookmarkBinding>(
         //DB 리스트 조회 실패
         binding.bookmarkViewModel?.errorMessage?.observe(viewLifecycleOwner, Observer {
             Logger.d("bookmarkViewModel observe errorMessage $it")
-            showToast(getString(R.string.common_toast_msg_network_error))
+            context?.let { showToast(it, getString(R.string.common_toast_msg_network_error)) }
         })
 
         binding.bookmarkViewModel?.sortType?.observe(viewLifecycleOwner, Observer {
@@ -110,6 +110,10 @@ class BookmarkFragment : BaseFragment<FragmentBookmarkBinding>(
         //상세화면에서 북마크 체크여부
         binding.bookmarkViewModel?.existsProductModel?.observe(viewLifecycleOwner, Observer {
             binding.bookmarkEventViewModel?.deletedObserveBookmark(it)
+        })
+
+        binding.bookmarkViewModel?.productItemSelected?.observe(viewLifecycleOwner, Observer {
+            activityResultLauncher.launch(ProductDetailContractData(it.position, it.productModel))
         })
     }
 

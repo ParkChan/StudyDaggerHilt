@@ -1,7 +1,6 @@
 package com.chan.ui.bookmark.viewmodel
 
 import android.content.Context
-import androidx.activity.result.ActivityResultLauncher
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.chan.common.base.BaseViewModel
@@ -13,8 +12,7 @@ import com.chan.ui.home.model.DescriptionModel
 import com.chan.ui.home.model.ProductModel
 
 class BookmarkViewModel(
-    private val bookmarkRepository: BookmarkRepository,
-    private val activityResultLauncher: ActivityResultLauncher<ProductDetailContractData>
+    private val bookmarkRepository: BookmarkRepository
 ) : BaseViewModel() {
 
     private val _bookmarkListData = MutableLiveData<List<BookmarkModel>>()
@@ -28,6 +26,9 @@ class BookmarkViewModel(
 
     private val _existsProductModel = MutableLiveData<ProductModel>()
     val existsProductModel: LiveData<ProductModel> get() = _existsProductModel
+
+    private val _productItemSelected = MutableLiveData<ProductDetailContractData>()
+    val productItemSelected get() = _productItemSelected
 
     //정렬 타입
     private val _sortType = MutableLiveData<BookmarkSortType>().apply {
@@ -71,7 +72,7 @@ class BookmarkViewModel(
             ),
             rate = model.rate
         ).run {
-            activityResultLauncher.launch(ProductDetailContractData(position, this))
+            _productItemSelected.value = ProductDetailContractData(position, this)
         }
     }
 
