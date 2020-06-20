@@ -1,13 +1,11 @@
 package com.chan
 
-import com.chan.dagger.DaggerAppComponent
+import android.app.Application
 import com.orhanobut.logger.AndroidLogAdapter
 import com.orhanobut.logger.BuildConfig
 import com.orhanobut.logger.Logger
-import dagger.android.AndroidInjector
-import dagger.android.DaggerApplication
 
-class App: DaggerApplication() {
+class MyApplication: Application() {
 
     override fun onCreate() {
         super.onCreate()
@@ -16,9 +14,5 @@ class App: DaggerApplication() {
                 return BuildConfig.DEBUG
             }
         })
-    }
-
-    override fun applicationInjector(): AndroidInjector<out DaggerApplication> {
-        return DaggerAppComponent.factory().create(this)
     }
 }

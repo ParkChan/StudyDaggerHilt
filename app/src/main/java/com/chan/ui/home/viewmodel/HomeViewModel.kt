@@ -1,7 +1,6 @@
 package com.chan.ui.home.viewmodel
 
 import android.content.Context
-import androidx.activity.result.ActivityResultLauncher
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.chan.common.base.BaseViewModel
@@ -13,7 +12,6 @@ import com.chan.ui.home.repository.GoodChoiceRepository
 import com.orhanobut.logger.Logger
 
 class HomeViewModel(
-    private val activityResultLauncher: ActivityResultLauncher<ProductDetailContractData>,
     private val goodChoiceRepository: GoodChoiceRepository,
     private val bookmarkRepository: BookmarkRepository
 ) : BaseViewModel() {
@@ -30,6 +28,9 @@ class HomeViewModel(
 
     private val _errorMessage = MutableLiveData<String>()
     val errorMessage: LiveData<String> get() = _errorMessage
+
+    private val _productItemSelected = MutableLiveData<ProductDetailContractData>()
+    val productItemSelected get() = _productItemSelected
 
 
     fun listScrolled(visibleItemCount: Int, fistVisibleItem: Int, totalItemCount: Int) {
@@ -96,7 +97,7 @@ class HomeViewModel(
 
     //상품 상세화면으로 이동
     fun startProductDetailActivity(position: Int, productModel: ProductModel) {
-        activityResultLauncher.launch(ProductDetailContractData(position, productModel))
+        _productItemSelected.value = ProductDetailContractData(position, productModel)
     }
 
     private fun insertBookMark(context: Context, model: ProductModel) {
