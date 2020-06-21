@@ -3,6 +3,7 @@ package com.chan.ui.home
 import android.os.Bundle
 import android.view.View
 import androidx.activity.result.ActivityResultLauncher
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -23,10 +24,14 @@ import com.chan.ui.home.repository.GoodChoiceRepository
 import com.chan.ui.home.viewmodel.HomeViewModel
 import com.chan.utils.showToast
 import com.orhanobut.logger.Logger
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class HomeFragment : BaseFragment<FragmentHomeBinding>(
     R.layout.fragment_home
 ) {
+
+    private val homeViewModel by viewModels<HomeViewModel>()
 
     private val activityResultLauncher: ActivityResultLauncher<ProductDetailContractData> =
         registerForActivityResult(
@@ -46,16 +51,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(
 
     @Suppress("UNCHECKED_CAST")
     private fun initViewModel() {
-        binding.homeViewModel = ViewModelProvider(this, object : ViewModelProvider.Factory {
-            override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-                return HomeViewModel(
-                    GoodChoiceRepository(
-                        SearchProductRemoteDataSource(GoodChoiceApi.create())
-                    ),
-                    BookmarkRepository(BookmarkDataSource())
-                ) as T
-            }
-        }).get(HomeViewModel::class.java)
+        binding.homeViewModel = homeViewModel
 
         binding.rvProduct.adapter = ProductListAdapter(binding.homeViewModel as HomeViewModel)
     }

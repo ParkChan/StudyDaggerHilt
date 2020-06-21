@@ -6,8 +6,9 @@ import com.chan.ui.home.model.res.ResProductListModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
+import javax.inject.Inject
 
-class SearchProductRemoteDataSource(
+class SearchProductRemoteDataSource @Inject constructor(
     private val retrofit: GoodChoiceApi
 ) {
     fun searchProductList(

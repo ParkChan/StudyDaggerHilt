@@ -1,6 +1,7 @@
 package com.chan.ui.bookmark.viewmodel
 
 import android.content.Context
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.chan.common.base.BaseViewModel
@@ -10,8 +11,9 @@ import com.chan.ui.bookmark.repository.BookmarkRepository
 import com.chan.ui.detail.ProductDetailContractData
 import com.chan.ui.home.model.DescriptionModel
 import com.chan.ui.home.model.ProductModel
+import javax.inject.Inject
 
-class BookmarkViewModel(
+class BookmarkViewModel @ViewModelInject constructor(
     private val bookmarkRepository: BookmarkRepository
 ) : BaseViewModel() {
 

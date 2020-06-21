@@ -6,8 +6,11 @@ import com.chan.ui.bookmark.local.BookmarkDataSource
 import com.chan.ui.bookmark.model.BookmarkModel
 import com.chan.ui.home.model.ProductModel
 import io.reactivex.disposables.Disposable
+import javax.inject.Inject
 
-class BookmarkRepository(private val bookmarkDataSource: BookmarkDataSource) {
+class BookmarkRepository @Inject constructor(
+    private val bookmarkDataSource: BookmarkDataSource
+) {
 
     fun selectAll(
         context: Context,

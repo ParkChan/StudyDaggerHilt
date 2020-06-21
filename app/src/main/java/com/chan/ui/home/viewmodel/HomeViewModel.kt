@@ -1,6 +1,7 @@
 package com.chan.ui.home.viewmodel
 
 import android.content.Context
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.chan.common.base.BaseViewModel
@@ -11,7 +12,7 @@ import com.chan.ui.home.model.ProductModel
 import com.chan.ui.home.repository.GoodChoiceRepository
 import com.orhanobut.logger.Logger
 
-class HomeViewModel(
+class HomeViewModel @ViewModelInject constructor(
     private val goodChoiceRepository: GoodChoiceRepository,
     private val bookmarkRepository: BookmarkRepository
 ) : BaseViewModel() {

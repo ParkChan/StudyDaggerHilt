@@ -8,8 +8,9 @@ import com.orhanobut.logger.Logger
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
+import javax.inject.Inject
 
-class BookmarkDataSource {
+class BookmarkDataSource @Inject constructor(){
 
     fun selectAll(
         context: Context,

@@ -12,17 +12,11 @@ abstract class BaseActivity<VDB : ViewDataBinding>(
     private val layoutResId: Int
 ) : AppCompatActivity() {
 
-    lateinit var binding: VDB
+    protected lateinit var binding: VDB
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, layoutResId)
         binding.lifecycleOwner = this
     }
-
-    fun showToast(msg: String?) = Toast.makeText(
-        this,
-        msg,
-        Toast.LENGTH_SHORT
-    ).show()
 }
