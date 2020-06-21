@@ -1,4 +1,4 @@
-# StudyBaseCode
+# StudyDaggerHilt
 
 ### 적용 기술
 - JetPack
@@ -14,6 +14,9 @@
 
 - Asynchronous
   - Rxjava
+
+- DependenciesInjection
+  - Dagger Android Hilt
 
 ### 구현 내용
 API 정보를 이용하여, 화면을 구성

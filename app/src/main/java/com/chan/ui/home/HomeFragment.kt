@@ -5,22 +5,15 @@ import android.view.View
 import androidx.activity.result.ActivityResultLauncher
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import com.chan.R
 import com.chan.common.ListScrollEvent
 import com.chan.common.base.BaseFragment
 import com.chan.common.setRecyclerViewScrollListener
 import com.chan.databinding.FragmentHomeBinding
-import com.chan.network.api.GoodChoiceApi
-import com.chan.ui.bookmark.local.BookmarkDataSource
-import com.chan.ui.bookmark.repository.BookmarkRepository
 import com.chan.ui.detail.ProductDetailActivityContract
 import com.chan.ui.detail.ProductDetailContractData
 import com.chan.ui.home.adapter.ProductListAdapter
 import com.chan.ui.home.model.ProductModel
-import com.chan.ui.home.remote.SearchProductRemoteDataSource
-import com.chan.ui.home.repository.GoodChoiceRepository
 import com.chan.ui.home.viewmodel.HomeViewModel
 import com.chan.utils.showToast
 import com.orhanobut.logger.Logger
@@ -49,7 +42,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(
         requestFistPage()
     }
 
-    @Suppress("UNCHECKED_CAST")
     private fun initViewModel() {
         binding.homeViewModel = homeViewModel
 
@@ -61,7 +53,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(
             Logger.d("homeViewModel observe listData $it")
         })
         binding.homeViewModel?.errorMessage?.observe(viewLifecycleOwner, Observer {
-            Logger.d("homeViewModel observe errorMessage $it")
             context?.let { showToast(it, getString(R.string.common_toast_msg_network_error)) }
         })
         binding.homeViewModel?.productItemSelected?.observe(viewLifecycleOwner, Observer {

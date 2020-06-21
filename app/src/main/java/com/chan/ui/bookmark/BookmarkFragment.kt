@@ -76,7 +76,6 @@ class BookmarkFragment : BaseFragment<FragmentBookmarkBinding>(
 
         //DB 리스트 조회 실패
         binding.bookmarkViewModel?.errorMessage?.observe(viewLifecycleOwner, Observer {
-            Logger.d("bookmarkViewModel observe errorMessage $it")
             context?.let { showToast(it, getString(R.string.common_toast_msg_network_error)) }
         })
 
