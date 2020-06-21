@@ -27,13 +27,11 @@ class BookmarkFragment : BaseFragment<FragmentBookmarkBinding>(
         ProductDetailActivityContract()
     ) { result: ProductDetailContractData? ->
         Logger.d("activity result >>> $result")
-
         //북마크 리스트 갱신처리
         binding.bookmarkViewModel?.lastRequestSortType?.let { selectAllBookmarkList(it) }
-
-        //제휴점 상세에서 북마크를 취소한것이 있는지 여부에 따라 홈 리스트 갱신처리
         result?.productModel?.let {
-            binding.bookmarkViewModel?.isBookmarkCanceled(binding.root.context,
+            binding.bookmarkViewModel?.isBookmarkCanceled(
+                binding.root.context,
                 it
             )
         }

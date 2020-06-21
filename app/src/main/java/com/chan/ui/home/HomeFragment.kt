@@ -38,15 +38,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        injectComponent()
         initViewModel()
         iniViewModelObserve()
         initRecyclerViewPageEvent()
         requestFistPage()
-    }
-
-    private fun injectComponent(){
-
     }
 
     @Suppress("UNCHECKED_CAST")
