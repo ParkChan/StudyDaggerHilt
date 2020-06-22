@@ -49,15 +49,26 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(
     }
 
     private fun iniViewModelObserve() {
-        binding.homeViewModel?.productListData?.observe(viewLifecycleOwner, Observer {
-            Logger.d("homeViewModel observe listData $it")
-        })
-        binding.homeViewModel?.errorMessage?.observe(viewLifecycleOwner, Observer {
-            context?.let { showToast(it, getString(R.string.common_toast_msg_network_error)) }
-        })
-        binding.homeViewModel?.productItemSelected?.observe(viewLifecycleOwner, Observer {
-            activityResultLauncher.launch(ProductDetailContractData(it.position, it.productModel))
-        })
+        binding.homeViewModel?.productListData?.observe(
+            viewLifecycleOwner,
+            Observer {
+                Logger.d("homeViewModel observe listData $it")
+            })
+        binding.homeViewModel?.errorMessage?.observe(
+            viewLifecycleOwner,
+            Observer {
+                context?.let { showToast(it, getString(R.string.common_toast_msg_network_error)) }
+            })
+        binding.homeViewModel?.productItemSelected?.observe(
+            viewLifecycleOwner,
+            Observer {
+                activityResultLauncher.launch(
+                    ProductDetailContractData(
+                        it.position,
+                        it.productModel
+                    )
+                )
+            })
     }
 
     private fun initRecyclerViewPageEvent() {
