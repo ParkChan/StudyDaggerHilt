@@ -1,7 +1,6 @@
 package com.chan.di
 
 import com.chan.BuildConfig
-import com.chan.network.BASE_URL
 import com.chan.network.api.GoodChoiceApi
 import dagger.Module
 import dagger.Provides
@@ -20,33 +19,39 @@ class RetrofitModule {
 
     @Provides
     @Singleton
-    internal fun provideHttpLogging(): HttpLoggingInterceptor {
-        val logger = HttpLoggingInterceptor()
-        logger.level = if (BuildConfig.DEBUG) {
+    fun provideHttpLogging() = HttpLoggingInterceptor().apply {
+        level = if (BuildConfig.DEBUG) {
             HttpLoggingInterceptor.Level.BODY
         } else {
             HttpLoggingInterceptor.Level.NONE
         }
-        return logger
     }
 
     @Provides
     @Singleton
-    internal fun provideOkHttpClient(): OkHttpClient {
-        return OkHttpClient.Builder()
-            .addInterceptor(provideHttpLogging())
-            .build()
-    }
+    fun provideOkHttpClient(
+        httpLoggingInterceptor: HttpLoggingInterceptor
+    ): OkHttpClient = OkHttpClient.Builder()
+        .addInterceptor(httpLoggingInterceptor)
+        .build()
 
     @Provides
     @Singleton
-    internal fun provideRetrofit(): GoodChoiceApi {
-        return Retrofit.Builder()
-            .baseUrl(BASE_URL)
-            .client(provideOkHttpClient())
-            .addConverterFactory(GsonConverterFactory.create())
-            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-            .build()
-            .create(GoodChoiceApi::class.java)
+    fun provideRetrofit(
+        client: OkHttpClient
+    ): Retrofit = Retrofit.Builder()
+        .baseUrl(BASE_URL)
+        .client(client)
+        .addConverterFactory(GsonConverterFactory.create())
+        .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+        .build()
+
+    @Provides
+    @Singleton
+    fun provideGoodChoiceService(retrofit: Retrofit): GoodChoiceApi =
+        retrofit.create(GoodChoiceApi::class.java)
+
+    companion object {
+        private const val BASE_URL = "https://www.gccompany.co.kr/"
     }
 }
